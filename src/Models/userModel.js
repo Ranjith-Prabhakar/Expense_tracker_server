@@ -13,7 +13,9 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'password is missing']
-  }
+  },
+  members:[{userName:String,email:String}]
+    
 }, { timestamps: true });
 
 const userModel = mongoose.model("user", userSchema);

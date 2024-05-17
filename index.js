@@ -1,5 +1,6 @@
 const express = require("express")
 const cookieParser = require("cookie-parser")
+require("dotenv").config()
 const { ErrorHandler } = require('./src/utils/ErrorHandler')
 const mongoose = require('mongoose')
 const AuthRoute = require("./src/Routes/AuthRoute")
@@ -18,7 +19,7 @@ app.use('/auth', AuthRoute)
 app.use(ErrorHandler)
 app.listen(5000, async () => {
   console.log('servers started on 5000')
-  mongoose.connect("mongodb://127.0.0.1:27017/ExpenseCalculator")
+  mongoose.connect(process.env.DB_URL)
     .then((data) => { console.log(data.connection.host) })
     .catch((error) => {
       console.log(error.message)

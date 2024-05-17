@@ -6,7 +6,8 @@ const userSignupDB = async ({ userName, email, password }, next) => {
   try {
     const isExist = await userModel.findOne({ email });
     if (isExist) {
-      return next(new ErrorObject(400, "User already exists"));
+      console.log("isExist")
+      return next(new ErrorObject(400, "a User already exists with this Email"));
     } else {
       const hashedPassword = await bcrypt.hash(password, 10); // Hashing the password
       const user = await userModel.create({
@@ -24,4 +25,25 @@ const userSignupDB = async ({ userName, email, password }, next) => {
   }
 };
 
-module.exports = { userSignupDB };
+
+const userLoginDB = async ({ email, password }, next) => {
+  try {
+    const isExist = await userModel.findOne({ email });
+    if (isExist) {
+      isPasswordMatch = await bcrypt.compare(password, isExist.password)
+      if (isPasswordMatch) {
+        return isExist
+      }
+    } else {
+      return next(new ErrorObject(400, "Password mis match"));
+    } 
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      return next(new ErrorObject(400, error.message));
+    }
+    return next(new ErrorObject(500, "Internal Error"));
+  }
+}
+
+
+module.exports = { userSignupDB, userLoginDB };

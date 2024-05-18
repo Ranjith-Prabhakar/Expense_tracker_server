@@ -1,4 +1,4 @@
-const ErrorObject = require("./ErrorObject");
+const ErrorObject = require("../utils/ErrorObject");
 
 
 const ErrorHandler = (err, req, res, next) => {

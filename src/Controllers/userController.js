@@ -2,7 +2,8 @@ const { userSignupDB } = require("../Repository/userSignUp");
 const { userLoginDB } = require("../Repository/userLogin");
 const ErrorObject = require("../utils/ErrorObject");
 const { addMembers } = require("../Repository/addMembers");
-const { addTransactionDB } = require('../Repository/transactionRepo/addTransaction')
+const { addTransactionDB } = require('../Repository/transactionRepo/addTransaction');
+const { getUserTransactions } = require("../Repository/transactionRepo/getUserTransactions");
 
 const userSignup = async (req, res, next) => {
   try {
@@ -28,8 +29,8 @@ const userLogin = async (req, res, next) => {
 
     const user = await userLoginDB({ email, password }, next);
     if (user) {
-
-      res.status(200).json({ success: true, message: "User login has been successful", user });
+      const transactions = await getUserTransactions({ userId:user._id },next)
+      res.status(200).json({ success: true, message: "User login has been successful", user, transactions });
     } else {
       return next(new ErrorObject(401, "Invalid credentials"));
     }

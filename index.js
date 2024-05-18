@@ -1,7 +1,7 @@
 const express = require("express")
 const cookieParser = require("cookie-parser")
 require("dotenv").config()
-const { ErrorHandler } = require('./src/utils/ErrorHandler')
+const { ErrorHandler } = require('./src/middleware/ErrorHandler')
 const mongoose = require('mongoose')
 const AuthRoute = require("./src/Routes/AuthRoute")
 const cors = require("cors")

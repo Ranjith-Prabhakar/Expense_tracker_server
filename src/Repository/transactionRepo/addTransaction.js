@@ -5,7 +5,7 @@ const addTransactionDB = async ({ userId, modeOfTransaction, party, amount, narr
   try {
     const transaction = await transactionModel.create({ userId, modeOfTransaction, partyName:party, amount: parseInt(amount), narration })
     console.log("transaction", transaction)
-    const transactions = await transactionModel.find({ userId, partyName: party }) 
+    const transactions = await transactionModel.find({ userId }) 
     console.log("transactions", transactions)
     return transactions 
   } catch (error) {
